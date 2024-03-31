@@ -26,14 +26,3 @@ def plot_split_of_values(input_arrays):
     plt.tight_layout()
     plt.show()
     
-    # flattened_array = input_array.flatten()
-    # plt.figure(figsize=(4, 2))
-    # plt.hist(flattened_array, bins=50, color='blue', alpha=0.7)
-    # plt.title('Histogram of x_train Values')
-    # plt.xlabel('Values')
-    # plt.ylabel('Frequency')
-    # plt.grid(True)
-    # plt.show()
-
-# Preprocessing only on training or test data too? -> OneHotEncoder arky did
-    
