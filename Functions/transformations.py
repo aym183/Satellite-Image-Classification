@@ -1,6 +1,3 @@
-import numpy as np
-from sklearn.svm import SVC
-import matplotlib.pyplot as plt 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
 def normalise_min_max(train_set, test_set):
