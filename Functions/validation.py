@@ -1,7 +1,8 @@
 from sklearn.model_selection import cross_val_score, KFold, StratifiedKFold
+from sklearn.svm import SVC
 import numpy as np
 
-def holdout_cross_validation(svc, x_train, x_test, y_train, y_test):
+def holdout_validation(svc, x_train, x_test, y_train, y_test):
     svc.fit(x_train, y_train)
     svc.score(x_test, y_test) 
 
@@ -10,20 +11,35 @@ def holdout_cross_validation(svc, x_train, x_test, y_train, y_test):
     print(f"Testing Accuracy: {svc.score(x_test, y_test)}")
 
 # Might have to just do with training set and then report with test results?
-def k_fold_cross_valdiation(svc, x_array, y_array, k):
-    svc_scores = cross_val_score(svc, x_array, y_array, cv=k)
-    cv_mean_accuracy = np.mean(svc_scores)
-    print(f"------ {k} fold CV Validation ------")
+def cross_validation(svc, x_array, y_array, size):
+    cv_score = cross_val_score(svc, x_array, y_array, cv=size)
+    cv_mean_accuracy = np.mean(cv_score)
+    print(f"------ Cross Validation ------")
     print(f"Mean Accuracy: {cv_mean_accuracy}")
 
-def k_fold_cross_validation(stratified):
-    if stratified == True:
-        # strat_k_fold_cross validation
-        # Stratification was used because it preserves the percentage of samples for each class.
-        print("True")
-    else:
-        # k_fold_cross validation
-        print("False")
+def k_fold_valdiation(x_array, y_array, size):
+    kf = KFold(n_splits=size)
+    tracked_scores = np.zeros(size)
+    index = 0
+    for train_idx, test_idx in kf.split(x_array):
+        x_train_kfold, x_test_kfold = x_array[train_idx], x_array[test_idx]
+        y_train_kfold, y_test_kfold = y_array[train_idx], y_array[test_idx]
+
+        svc_clf = SVC()
+        svc_clf.fit(x_train_kfold, y_train_kfold)
+        tracked_scores[index] = svc_clf.score(x_test_kfold, y_test_kfold)
+        index += 1
+
+    print(f"------ K fold Validation ------")
+    print(f"Mean Accuracy: {tracked_scores.mean()}")
+    print(f"Std Deviation: {tracked_scores.std()}")
+    
+
+# def k_fold_cross_validation_strat(svc, x_array, y_array, k):
+#     # strat_k_fold_cross validation
+#     # Stratification was used because it preserves the percentage of samples for each class.
+#     svc_scores = StratifiedKFold(n_splits=k)
+#     return svc_scores
 
 
 # ---- Nested CV?
