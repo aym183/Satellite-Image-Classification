@@ -9,6 +9,7 @@ def holdout_cross_validation(svc, x_train, x_test, y_train, y_test):
     print(f"Training Accuracy: {svc.score(x_train, y_train)}")
     print(f"Testing Accuracy: {svc.score(x_test, y_test)}")
 
+# Might have to just do with training set and then report with test results?
 def k_fold_cross_valdiation(svc, x_array, y_array, k):
     svc_scores = cross_val_score(svc, x_array, y_array, cv=k)
     cv_mean_accuracy = np.mean(svc_scores)
