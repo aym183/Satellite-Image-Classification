@@ -33,13 +33,23 @@ def k_fold_valdiation(x_array, y_array, size):
     print(f"------ K fold Validation ------")
     print(f"Mean Accuracy: {tracked_scores.mean()}")
     print(f"Std Deviation: {tracked_scores.std()}")
+
+def k_fold_cross_validation_strat(x_array, y_array, size):
+    kf_strat = StratifiedKFold(n_splits=size)
+    tracked_scores = np.zeros(size)
+    index = 0
+    for train_idx, test_idx in kf_strat.split(x_array, y_array):
+        x_train_kfold, x_test_kfold = x_array[train_idx], x_array[test_idx]
+        y_train_kfold, y_test_kfold = y_array[train_idx], y_array[test_idx]
+
+        svc_clf = SVC()
+        svc_clf.fit(x_train_kfold, y_train_kfold)
+        tracked_scores[index] = svc_clf.score(x_test_kfold, y_test_kfold)
+        index += 1
+
+    print(f"------ Stratified K fold Validation ------")
+    print(f"Mean Accuracy: {tracked_scores.mean()}")
+    print(f"Std Deviation: {tracked_scores.std()}")
     
-
-# def k_fold_cross_validation_strat(svc, x_array, y_array, k):
-#     # strat_k_fold_cross validation
-#     # Stratification was used because it preserves the percentage of samples for each class.
-#     svc_scores = StratifiedKFold(n_splits=k)
-#     return svc_scores
-
 
 # ---- Nested CV?
