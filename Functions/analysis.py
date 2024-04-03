@@ -1,5 +1,9 @@
+'''
+For visualisations
+'''
 import matplotlib.pyplot as plt 
 import seaborn as sns
+from sklearn.metrics import ConfusionMatrixDisplay
 
 # Can we use sns!????
 def plot_correlation_heatmap(corr_matrix, top_features):
@@ -10,4 +14,9 @@ def plot_correlation_heatmap(corr_matrix, top_features):
     plt.ylabel('Target Variable')
     plt.show()
 
-    # return plt
+
+def fetch_confusion_matrix(classifier, test_set_x, test_set_y):
+    y_pred = classifier.predict(test_set_x)
+    ConfusionMatrixDisplay.from_predictions(test_set_y, y_pred)
+    plt.title("Confusion Matrix")
+    plt.show()
