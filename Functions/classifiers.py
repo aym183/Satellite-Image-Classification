@@ -2,6 +2,7 @@ from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 import numpy as np
 from functions.validation import *
+from sklearn.metrics import accuracy_score, classification_report
 
 def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_validation_type):
     svc = SVC(kernel='rbf') # Why poly and how does it work
@@ -26,6 +27,11 @@ def mlp_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_valid
     print(f"Testing Accuracy - {y_pred}")
     concatenated_array_x = np.concatenate((train_set_x, test_set_x), axis=0)
     concatenated_array_y = np.concatenate((train_set_y, test_set_y), axis=0)
+    accuracy = accuracy_score(test_set_y, y_pred)
+    print("Accuracy:", accuracy)
+    print("Classification Report:")
+    print(classification_report(test_set_y, y_pred))
+
     
     # -------- EDIT ACCORDING TO MLP --------
     # if cross_validation_type == "holdout":

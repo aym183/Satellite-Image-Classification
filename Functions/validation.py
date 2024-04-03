@@ -18,6 +18,9 @@ def cross_validation(svc, x_array, y_array, size):
     print(f"------ Cross Validation ------")
     print(f"Mean Accuracy: {cv_mean_accuracy}")
 
+def nested_cross_validation():
+    print("nested cross validation")
+
 def k_fold_valdiation(x_array, y_array, size):
     kf = KFold(n_splits=size)
     tracked_scores = np.zeros(size)
