@@ -5,7 +5,7 @@ from functions.validation import *
 from sklearn.metrics import accuracy_score, classification_report
 
 def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_validation_type):
-    svc = SVC(kernel='rbf') # Why poly and how does it work
+    svc = SVC(kernel='rbf', C=1, gamma="scale") # Configuration derived from hyperparameter tuning
     selected_features = train_set_x
     selected_test_features = test_set_x
     concatenated_array_x = np.concatenate((selected_features, selected_test_features), axis=0)
@@ -21,7 +21,7 @@ def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_valid
         k_fold_cross_validation_strat(concatenated_array_x, concatenated_array_y, 10, "svc")
 
 def mlp_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_validation_type):
-    mlp = mlp_classifier = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', random_state=42)
+    mlp = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', random_state=42)
     mlp.fit(train_set_x, train_set_y)
     # y_pred = mlp.predict(test_set_x)
     concatenated_array_x = np.concatenate((train_set_x, test_set_x), axis=0)
@@ -34,6 +34,6 @@ def mlp_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_valid
     elif cross_validation_type == "cv":
         cross_validation(mlp, train_set_x, train_set_y, 10)
     elif cross_validation_type == "k_fold":
-        k_fold_valdiation(concatenated_array_x, concatenated_array_y, 10, "mlp")
+        k_fold_valdiation(train_set_x, train_set_y, 10, "mlp")
     elif cross_validation_type == "k_fold_strat":
-        k_fold_cross_validation_strat(concatenated_array_x, concatenated_array_y, 10, "mlp")
+        k_fold_cross_validation_strat(train_set_x, train_set_y, 10, "mlp")
