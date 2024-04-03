@@ -1,4 +1,5 @@
 from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 import numpy as np
 from functions.validation import *
 
@@ -12,8 +13,11 @@ def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_valid
     if cross_validation_type == "holdout":
         holdout_validation(svc, selected_features, selected_test_features, train_set_y, test_set_y)
     elif cross_validation_type == "cv":
-        cross_validation(svc, concatenated_array_x, concatenated_array_y, 10)
+        cross_validation(svc, train_set_x, train_set_y, 10)
     elif cross_validation_type == "k_fold":
         k_fold_valdiation(concatenated_array_x, concatenated_array_y, 10)
     elif cross_validation_type == "k_fold_strat":
         k_fold_cross_validation_strat(concatenated_array_x, concatenated_array_y, 10)
+
+def mlp_classifier():
+    mlp = MLPClassifier()

@@ -10,7 +10,8 @@ def holdout_validation(svc, x_train, x_test, y_train, y_test):
     print(f"Training Accuracy: {svc.score(x_train, y_train)}")
     print(f"Testing Accuracy: {svc.score(x_test, y_test)}")
 
-# Might have to just do with training set and then report with test results?
+# USE ONLY TRAINING SET FOR ALL [Test separate]
+# CLASSIFICATION REPORT 
 def cross_validation(svc, x_array, y_array, size):
     cv_score = cross_val_score(svc, x_array, y_array, cv=size)
     cv_mean_accuracy = np.mean(cv_score)
