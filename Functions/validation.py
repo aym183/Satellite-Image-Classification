@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, classification_report
 
 '''
 ---- ADD MORE TESTING METHODS ----
+---- MAKE VARS THE SAME ----
 '''
 
 def holdout_validation(classifier, x_train, x_test, y_train, y_test):

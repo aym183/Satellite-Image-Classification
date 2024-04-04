@@ -8,3 +8,7 @@ def fetch_classification_report(classifier, test_set_x, test_set_y):
     y_pred = classifier.predict(test_set_x)
     print("----- Classification Report -----")
     print(classification_report(test_set_y, y_pred))
+
+def fetch_accuracy_score(test_set_y, predicted_set_y):
+    accuracy = accuracy_score(test_set_y, predicted_set_y)
+    print(f"Accurac: {accuracy}")
