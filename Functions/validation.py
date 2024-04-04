@@ -40,7 +40,7 @@ def k_fold_valdiation(x_array, y_array, size, classifier):
             tracked_scores[index] = svc_clf.score(x_test_kfold, y_test_kfold)
             index += 1
         else:
-            mlp = mlp_classifier = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', random_state=42)
+            mlp = mlp_classifier = MLPClassifier(hidden_layer_sizes=(100,), activation='tanh', solver='adam', alpha=0.05, random_state=42)
             mlp.fit(x_train_kfold, y_train_kfold)
             tracked_scores[index] = mlp.score(x_test_kfold, y_test_kfold)
             index += 1
@@ -65,7 +65,7 @@ def k_fold_cross_validation_strat(x_array, y_array, size, classifier):
             tracked_scores[index] = svc_clf.score(x_test_kfold, y_test_kfold)
             index += 1
         else:
-            mlp = mlp_classifier = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', random_state=42)
+            mlp = mlp_classifier = MLPClassifier(hidden_layer_sizes=(100,), activation='tanh', solver='adam', alpha=0.05, random_state=42)
             mlp.fit(x_train_kfold, y_train_kfold)
             tracked_scores[index] = mlp.score(x_test_kfold, y_test_kfold)
             index += 1
