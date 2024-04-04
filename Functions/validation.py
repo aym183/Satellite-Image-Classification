@@ -10,6 +10,7 @@ def holdout_validation(classifier, x_train, x_test, y_train, y_test):
     print("------ Holdout Validation ------")
     print(f"Training Accuracy: {classifier.score(x_train, y_train)}")
     print(f"Testing Accuracy: {classifier.score(x_test, y_test)}")
+    return classifier
     # print(f"Loss: {classifier.loss_}")
 
 # USE ONLY TRAINING SET FOR ALL [Test separate]
@@ -20,6 +21,7 @@ def cross_validation(classifier, x_array, y_array, size):
     print("------ Cross Validation ------")
     print(f"Mean Accuracy: {cv_mean_accuracy}")
     # print(f"Loss: {classifier.loss_}")
+    return classifier
 
 def nested_cross_validation():
     print("nested cross validation")
@@ -46,6 +48,7 @@ def k_fold_valdiation(x_array, y_array, size, classifier):
     print("------ K fold Validation ------")
     print(f"Mean Accuracy: {tracked_scores.mean()}")
     print(f"Std Deviation: {tracked_scores.std()}")
+    return classifier
     # print(f"Loss: {classifier.loss_}")
 
 def k_fold_cross_validation_strat(x_array, y_array, size, classifier):
@@ -70,6 +73,7 @@ def k_fold_cross_validation_strat(x_array, y_array, size, classifier):
     print("------ Stratified K fold Validation ------")
     print(f"Mean Accuracy: {tracked_scores.mean()}")
     print(f"Std Deviation: {tracked_scores.std()}")
+    return classifier
     # print(f"Loss: {classifier.loss_}")
     
 

@@ -25,7 +25,7 @@ def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_valid
     return svc
 
 def mlp_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_validation_type):
-    mlp = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', random_state=42)
+    mlp = MLPClassifier(hidden_layer_sizes=(100,), activation='tanh', solver='adam', alpha=0.05, random_state=42) # Configuration derived from hyperparameter tuning
     mlp.fit(train_set_x, train_set_y)
     # y_pred = mlp.predict(test_set_x)
     concatenated_array_x = np.concatenate((train_set_x, test_set_x), axis=0)
