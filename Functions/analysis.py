@@ -39,7 +39,7 @@ def plot_roc_curve(y_true, y_pred):
     for idx in range(len(np.unique(y_true))):
         fpr, tpr, _ = roc_curve((y_true == idx).astype(int), y_pred[:, idx])
         roc_auc = auc(fpr, tpr)
-        plt.plot(fpr, tpr, lw=2, label='Class {})'.format(idx, roc_auc)) # (AUC = {:.2f}
+        plt.plot(fpr, tpr, lw=2, label='Class {}'.format(idx, roc_auc)) # (AUC = {:.2f}
 
     plt.plot([0, 1], [0, 1], color='gray', lw=1, linestyle='--')
     plt.xlim([0.0, 1.0])
