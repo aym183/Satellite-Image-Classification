@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score, classification_report
 # Configuration change all from hyperparameter
 
 def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y, cross_validation_type):
-    svc = SVC(kernel='rbf', C=1, gamma="scale") # Configuration derived from hyperparameter tuning
+    svc = SVC(kernel='rbf', C=1, gamma="scale", probability=True) # Configuration derived from hyperparameter tuning
     selected_features = train_set_x
     selected_test_features = test_set_x
     concatenated_array_x = np.concatenate((selected_features, selected_test_features), axis=0)

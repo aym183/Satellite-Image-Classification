@@ -3,7 +3,8 @@ For visualisations
 '''
 import matplotlib.pyplot as plt 
 import seaborn as sns
-from sklearn.metrics import ConfusionMatrixDisplay, precision_recall_curve
+from sklearn.metrics import ConfusionMatrixDisplay, precision_recall_curve, auc
+import numpy as np
 
 # Can we use sns!????
 def plot_correlation_heatmap(corr_matrix, top_features):
@@ -22,11 +23,19 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
     plt.show()
 
 def plot_precision_recall_curve(y_true, y_pred):
-    precision, recall = precision_recall_curve(y_true, y_pred)
-    plt.figure(figsize=(8, 6))
-    plt.plot(recall, precision, lw=2)
+    plt.figure(figsize=(6,4))
+    for i in range(len(np.unique(y_true))):
+        precision, recall, _ = precision_recall_curve((y_true == i).astype(int), y_pred[:, i])
+        plt.plot(recall, precision, lw=2, label='Class {}'.format(i))
+
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.title('Precision-Recall Curve')
-    plt.grid(True)
+    plt.legend(loc='best')
     plt.show()
+
+def plot_roc_curve():
+    return "roc"
+
+def plot_det_curve():
+    return "det"
