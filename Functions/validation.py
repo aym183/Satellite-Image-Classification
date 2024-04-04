@@ -4,6 +4,11 @@ from sklearn.svm import SVC
 import numpy as np
 from sklearn.metrics import accuracy_score, classification_report
 
+
+'''
+---- ADD MORE TESTING METHODS ----
+'''
+
 def holdout_validation(classifier, x_train, x_test, y_train, y_test):
     classifier.fit(x_train, y_train)
 
