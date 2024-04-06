@@ -3,7 +3,7 @@ For visualisations
 '''
 import matplotlib.pyplot as plt 
 import seaborn as sns
-from sklearn.metrics import ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
 import numpy as np
 
 # Can we use sns!????
