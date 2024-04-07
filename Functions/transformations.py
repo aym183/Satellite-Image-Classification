@@ -1,4 +1,5 @@
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+import numpy as np
 
 # Normalisation
 def normalise_min_max(train_set, test_set):
@@ -25,3 +26,24 @@ def normalise_robust_scaler(train_set, test_set):
     x_train_norm = robust_scaler.fit_transform(train_set)
     x_test_norm = robust_scaler.fit_transform(test_set)
     return x_train_norm, x_test_norm
+
+def dataset_undersampling(dataset_x, dataset_y):
+    occurrences_of_5 = np.where(dataset_y == 5)[0] # Lowest occurences class
+    num_occurences = len(occurrences_of_5)
+    other_indices = np.where(dataset_y != 5)[0]
+
+    selected_indices_other_classes = []
+    for class_label in np.unique(dataset_y):
+        if class_label != 5:
+            class_indices = np.where(dataset_y == class_label)[0]
+            selected_indices = np.random.choice(class_indices, size=num_occurences, replace=False)
+            selected_indices_other_classes.append(selected_indices)
+
+    balanced_indices = np.concatenate((occurrences_of_5, *selected_indices_other_classes))
+    x_balanced = dataset_x[balanced_indices]
+    y_balanced = dataset_y[balanced_indices]
+
+    return x_balanced, y_balanced
+
+def dataset_oversampling(dataset):
+    return "oversampling"
