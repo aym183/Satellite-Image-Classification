@@ -14,5 +14,5 @@ def fetch_accuracy_score(test_set_y, predicted_set_y):
     print(f"Accuracy: {accuracy}")
 
 def fetch_log_loss(test_set_y, predicted_set_y):
-    log_loss = log_loss(test_set_y, predicted_set_y)
-    print(f"Log Loss: {log_loss}")
+    lg_loss = log_loss(test_set_y, predicted_set_y)
+    print(f"Log Loss: {lg_loss}")
