@@ -23,15 +23,27 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
     plt.show()
 
     conf_mtrx = confusion_matrix(test_set_y, y_pred)
-    FP = conf_mtrx.sum(axis=0)
-    FN = conf_mtrx.sum(axis=1)
-    TP = np.diag(conf_mtrx)
-    TN = conf_mtrx.sum() - (FP + FN + TP)
+    metrics = []
+    
+    for idx in range(len(conf_mtrx)):
+        TP = conf_mtrx[idx, idx]
+        FP = np.sum(conf_mtrx[:, idx]) - TP
+        FN = np.sum(conf_mtrx[idx, :]) - TP
+        TN = np.sum(conf_mtrx) - (TP + FP + FN)
+        
+        metrics.append([f"Class {idx}, TP {TP}, FP {FP}, FN {FN}, TN {TN}"])
+    
+    print(np.array(metrics))
+    
+    # FP = conf_mtrx.sum(axis=0) - TP
+    # FN = conf_mtrx.sum(axis=1) - TP
+    # TP = np.diag(conf_mtrx)
+    # TN = conf_mtrx.sum() - (FP + FN + TP)
 
-    print(f"True Positive -> {TP}")
-    print(f"True Negative -> {TN}")
-    print(f"False Positive -> {FP}")
-    print(f"False Positive -> {FN}")
+    # print(f"True Positive -> {TP}")
+    # print(f"True Negative -> {TN}")
+    # print(f"False Positive -> {FP}")
+    # print(f"False Negative -> {FN}")
 
 def plot_precision_recall_curve(y_true, y_pred):
     plt.figure(figsize=(6,4))
