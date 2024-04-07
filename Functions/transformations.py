@@ -30,7 +30,6 @@ def normalise_robust_scaler(train_set, test_set):
 def dataset_undersampling(dataset_x, dataset_y):
     occurrences_of_5 = np.where(dataset_y == 5)[0] # Lowest occurences class
     num_occurences = len(occurrences_of_5)
-    other_indices = np.where(dataset_y != 5)[0]
 
     selected_indices_other_classes = []
     for class_label in np.unique(dataset_y):
@@ -45,5 +44,20 @@ def dataset_undersampling(dataset_x, dataset_y):
 
     return x_balanced, y_balanced
 
-def dataset_oversampling(dataset):
-    return "oversampling"
+# First find out in each dataset the most occurring class
+def dataset_oversampling(dataset_x, dataset_y):
+    occurrences_of_7 = np.where(dataset_y == 7)[0] # Highest occurences class
+    num_occurences = len(occurrences_of_7)
+
+    selected_indices_other_classes = []
+    for class_label in np.unique(dataset_y):
+        if class_label != 7:
+            class_indices = np.where(dataset_y == class_label)[0]
+            selected_indices = np.random.choice(class_indices, size=num_occurences)
+            selected_indices_other_classes.append(selected_indices)
+
+    balanced_indices = np.concatenate((occurrences_of_7, *selected_indices_other_classes))
+    x_balanced = dataset_x[balanced_indices]
+    y_balanced = dataset_y[balanced_indices]
+
+    return x_balanced, y_balanced
