@@ -1,4 +1,4 @@
-from sklearn.externals import joblib
+import joblib
 
 def save_model(model, file_name):
     joblib.dump(model, file_name)
