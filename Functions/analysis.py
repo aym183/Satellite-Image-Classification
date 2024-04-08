@@ -101,7 +101,7 @@ def plot_subfigures(plots, plot_titles, y_pred, y_true, fig_size=(15,10)):
 
 def plot_predicted_vs_actual(y_test, y_pred):
     plt.figure(figsize=(8, 6))
-    plt.scatter(y_test, y_pred, color='blue', alpha=0.5)
+    plt.scatter(y_test, y_pred, color='blue')
     plt.plot(np.unique(y_test), np.poly1d(np.polyfit(y_test, y_pred, 1))(np.unique(y_test)), color='red')
     plt.xlabel('Actual Values')
     plt.ylabel('Predicted Values')
