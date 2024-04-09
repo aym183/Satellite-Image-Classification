@@ -1,4 +1,5 @@
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+from sklearn.decomposition import PCA
 import numpy as np
 
 # Normalisation
@@ -61,3 +62,10 @@ def dataset_oversampling(dataset_x, dataset_y):
     y_balanced = dataset_y[balanced_indices]
 
     return x_balanced, y_balanced
+
+def reduce_pca_dimensionality(train_set_x, test_set_x):
+    pca = PCA(n_components=2)
+    x_train_pca = pca.fit_transform(train_set_x)
+    x_test_pca = pca.fit_transform(test_set_x)
+
+    return x_train_pca, x_test_pca
