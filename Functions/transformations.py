@@ -1,6 +1,8 @@
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Normalisation
 def normalise_min_max(train_set, test_set):
@@ -63,9 +65,22 @@ def dataset_oversampling(dataset_x, dataset_y):
 
     return x_balanced, y_balanced
 
-def reduce_pca_dimensionality(train_set_x, test_set_x):
+def reduce_pca_dimensionality(train_set_x, test_set_x, test_set_y):
     pca = PCA(n_components=2)
     x_train_pca = pca.fit_transform(train_set_x)
-    x_test_pca = pca.fit_transform(test_set_x)
+    x_test_pca = pca.transform(test_set_x)
 
+    kmeans = KMeans(n_clusters=3)
+    kmeans.fit(x_test_pca)
+    cluster_labels = kmeans.predict(x_test_pca)
+
+    plt.figure(figsize=(8, 6))
+    plt.scatter(x_test_pca[:, 0], x_test_pca[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.5)
+    plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='x', s=200, c='red', label='Cluster Centers')
+    plt.title('PCA Reduced Testing Dataset with K-means Clustering')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.colorbar(label='Cluster')
+    plt.legend()
+    plt.show()
     return x_train_pca, x_test_pca
