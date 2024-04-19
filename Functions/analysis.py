@@ -2,17 +2,21 @@
 For visualisations
 '''
 import matplotlib.pyplot as plt 
-import seaborn as sns
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
 import numpy as np
 
-# Can we use sns!????
-def plot_correlation_heatmap(corr_matrix, top_features):
+def plot_correlation_heatmap(corr_matrix):
     plt.figure(figsize=(8, 6))
-    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f", xticklabels=['Feature {}'.format(i) for i in range(1, len(top_features)+1)], yticklabels=['Target Variable'])
+    plt.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
+    plt.colorbar(label='Correlation')
+    plt.xticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
+    plt.yticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1))
     plt.title('Pearson Correlation Heatmap')
     plt.xlabel('Features')
-    plt.ylabel('Target Variable')
+    plt.ylabel('Features')
+    for i in range(corr_matrix.shape[0]):
+            for j in range(corr_matrix.shape[1]):
+                plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
     plt.show()
 
 
