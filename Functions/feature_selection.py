@@ -3,10 +3,10 @@ import numpy as np
 
 def calculate_variance_threshold(train_set_x, test_set_x):
     variances = np.var(train_set_x, axis=0)
-    # average_variance = np.mean(variances)
-    std_dev = np.std(variances) # Due to the high variability of data, standard deviation was taken - 0.026167810885013097
+    average_variance = np.mean(variances) # To get the threshold value, the average of the variance for each feature was taken - 0.05
+    # std_dev = np.std(variances) # Due to the high variability of data, standard deviation was taken - 0.026167810885013097
 
-    threshold = std_dev
+    threshold = average_variance
     variance_calculator = VarianceThreshold(threshold)
     variance_calculator.fit(train_set_x)
     x_train_selected = variance_calculator.transform(train_set_x)

@@ -5,19 +5,30 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
 import numpy as np
 
-def plot_correlation_heatmap(corr_matrix):
-    plt.figure(figsize=(8, 6))
-    plt.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
-    # plt.colorbar(label='Correlation')
-    plt.xticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
-    plt.yticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1))
-    plt.title('Pearson Correlation Heatmap')
-    plt.xlabel('Features')
-    plt.ylabel('Features')
+# def plot_correlation_heatmap(corr_matrix):
+#     plt.figure(figsize=(8, 6))
+#     plt.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
+#     # plt.colorbar(label='Correlation')
+#     plt.xticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
+#     plt.yticks(np.arange(corr_matrix.shape[0]), np.arange(1, corr_matrix.shape[0] + 1))
+#     plt.title('Pearson Correlation Heatmap')
+#     plt.xlabel('Features')
+#     plt.ylabel('Features')
+#     for i in range(corr_matrix.shape[0]):
+#             for j in range(corr_matrix.shape[1]):
+#                 plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
+#     plt.show()
+
+def plot_correlation_heatmap(ax, corr_matrix, title):
+    im = ax.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
+    ax.set_xticks(np.arange(corr_matrix.shape[0]))
+    ax.set_yticks(np.arange(corr_matrix.shape[0]))
+    ax.set_xticklabels(np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
+    ax.set_yticklabels(np.arange(1, corr_matrix.shape[0] + 1))
+    ax.set_title(title)
     for i in range(corr_matrix.shape[0]):
-            for j in range(corr_matrix.shape[1]):
-                plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
-    plt.show()
+        for j in range(corr_matrix.shape[1]):
+            ax.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
 
 
 def plot_confusion_matrix(classifier, test_set_x, test_set_y):

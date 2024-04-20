@@ -17,7 +17,6 @@ def holdout_validation(classifier, x_train, x_test, y_train, y_test):
     print(f"Training Accuracy: {classifier.score(x_train, y_train)}")
     print(f"Testing Accuracy: {classifier.score(x_test, y_test)}")
     return classifier
-    # print(f"Loss: {classifier.loss_}")
 
 # USE ONLY TRAINING SET FOR ALL [Test separate]
 # CLASSIFICATION REPORT 
@@ -28,9 +27,6 @@ def cross_validation(classifier, x_array, y_array, size):
     print(f"Mean Accuracy: {cv_mean_accuracy}")
     # print(f"Loss: {classifier.loss_}")
     return classifier
-
-def nested_cross_validation():
-    print("nested cross validation")
 
 def k_fold_valdiation(x_array, y_array, size, classifier):
     kf = KFold(n_splits=size, shuffle=True) # Mention why shuffling
