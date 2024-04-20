@@ -32,6 +32,7 @@ def plot_correlation_heatmap(ax, corr_matrix, title):
 
 
 def plot_confusion_matrix(classifier, test_set_x, test_set_y):
+    confusion_matrix_values = []
     y_pred = classifier.predict(test_set_x)
     ConfusionMatrixDisplay.from_predictions(test_set_y, y_pred)
     plt.title("Confusion Matrix")
@@ -45,10 +46,24 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
         FP = np.sum(conf_mtrx[:, idx]) - TP
         FN = np.sum(conf_mtrx[idx, :]) - TP
         TN = np.sum(conf_mtrx) - (TP + FP + FN)
-        
-        metrics.append([f"Class {idx}, TP {TP}, FP {FP}, FN {FN}, TN {TN}"])
-    
-    print(np.array(metrics))
+        confusion_matrix_values.append((TP, FP, FN, TN))
+
+    fig, ax = plt.subplots()
+    table = ax.table(cellText=confusion_matrix_values,
+                    colLabels=['True Positive', 'False Positive', 'False Negative', 'True Negative'],
+                    rowLabels=[
+                        'Class 0', 'Class 1', 'Class 2', 'Class 3',
+                        'Class 4', 'Class 5',
+                        'Class 6', 'Class 7', 'Class 8',
+                        'Class 9'
+                    ],
+                    loc='center')
+
+    # table.auto_set_font_size(False)
+    # table.set_fontsize(8)
+    table.scale(1.2, 1.2)
+    ax.axis('off')
+    plt.show()
     
     # FP = conf_mtrx.sum(axis=0) - TP
     # FN = conf_mtrx.sum(axis=1) - TP
