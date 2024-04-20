@@ -61,7 +61,7 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
 
     # table.auto_set_font_size(False)
     # table.set_fontsize(8)
-    table.scale(1.2, 1.2)
+    table.scale(1.2, 1)
     ax.axis('off')
     plt.show()
     
@@ -75,44 +75,41 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
     # print(f"False Positive -> {FP}")
     # print(f"False Negative -> {FN}")
 
-def plot_precision_recall_curve(y_true, y_pred):
-    plt.figure(figsize=(6,4))
+def plot_precision_recall_curve(y_true, y_pred, ax):
     for idx in range(len(np.unique(y_true))):
         precision, recall, _ = precision_recall_curve((y_true == idx).astype(int), y_pred[:, idx])
-        plt.plot(recall, precision, lw=2, label='Class {}'.format(idx))
+        ax.plot(recall, precision, lw=2, label='Class {}'.format(idx))
 
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    plt.title('Precision-Recall Curve')
-    plt.legend(loc='best')
+    ax.set_xlabel('Recall')
+    ax.set_ylabel('Precision')
+    ax.set_title('Precision-Recall Curve')
+    ax.legend(loc='best')
     # plt.show()
 
-def plot_roc_curve(y_true, y_pred):
-    plt.figure(figsize=(6, 4))
+def plot_roc_curve(y_true, y_pred, ax):
     for idx in range(len(np.unique(y_true))):
         fpr, tpr, _ = roc_curve((y_true == idx).astype(int), y_pred[:, idx])
         roc_auc = auc(fpr, tpr)
-        plt.plot(fpr, tpr, lw=2, label='Class {}'.format(idx, roc_auc)) # (AUC = {:.2f}
+        ax.plot(fpr, tpr, lw=2, label='Class {}'.format(idx, roc_auc)) # (AUC = {:.2f}
 
-    plt.plot([0, 1], [0, 1], color='gray', lw=1, linestyle='--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve')
-    plt.legend(loc='lower right')
+    ax.plot([0, 1], [0, 1], color='gray', lw=1, linestyle='--')
+    ax.set_xlim([0.0, 1.0])
+    ax.set_ylim([0.0, 1.05])
+    ax.set_xlabel('False Positive Rate')
+    ax.set_ylabel('True Positive Rate')
+    ax.set_title('ROC Curve')
+    ax.legend(loc='lower right')
     # plt.show()
 
-def plot_det_curve(y_true, y_pred):
-    plt.figure(figsize=(6, 4))
+def plot_det_curve(y_true, y_pred, ax):
     for idx in range(len(np.unique(y_true))):
         fpr, fnr, _ = det_curve((y_true == idx).astype(int), y_pred[:, idx])
-        plt.plot(fpr, fnr, lw=2, label='Class {}'.format(idx))
+        ax.plot(fpr, fnr, lw=2, label='Class {}'.format(idx))
 
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('False Negative Rate')
-    plt.title('DET Curve')
-    plt.legend(loc='best')
+    ax.set_xlabel('False Positive Rate')
+    ax.set_ylabel('False Negative Rate')
+    ax.set_title('DET Curve')
+    ax.legend(loc='best')
     # plt.show()
 
 def plot_subfigures(plots, plot_titles, y_pred, y_true, fig_size=(15,10)):
