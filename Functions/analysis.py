@@ -22,6 +22,8 @@ def plot_single_correlation_heatmap(corr_matrix, title):
 
 def plot_correlation_heatmap(ax, corr_matrix, title):
     im = ax.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
+    cbar = ax.figure.colorbar(im, ax=ax)
+    cbar.set_label('Correlation')
     ax.set_xticks(np.arange(corr_matrix.shape[0]))
     ax.set_yticks(np.arange(corr_matrix.shape[0]))
     ax.set_xticklabels(np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
