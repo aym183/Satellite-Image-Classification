@@ -1,4 +1,5 @@
 from sklearn.feature_selection import r_regression, f_regression, VarianceThreshold
+from sklearn.linear_model import PoissonRegressor
 import numpy as np
 
 # GPT refer
@@ -42,4 +43,11 @@ def f_regression_scores(train_set_x, train_set_y):
     imp_features = np.argsort(np.abs(f_scores))
     return imp_features
 
-# def poisson_method():
+def poisson_method(train_set_x, train_set_y):
+    poisson_model = PoissonRegressor()
+    poisson_model.fit(train_set_x, train_set_y)
+    feature_importance = np.abs(poisson_model.coef_)
+    top_10_features_idx = np.argsort(feature_importance)[-10:]
+    top_10_features_train = train_set_x[:, top_10_features_idx]
+
+    return top_10_features_idx
