@@ -6,12 +6,12 @@ def calculate_variance_threshold(train_set_x, test_set_x, top_10_features):
     variances = np.var(train_set_x, axis=0)
     average_variance = np.mean(variances) # To get the threshold value, the average of the variance for each feature was taken - 0.05
     # std_dev = np.std(variances) # Due to the high variability of data, standard deviation was taken - 0.026167810885013097
+    # print(x_train_selected.shape)
+    # print(x_test_selected.shape)
 
     threshold = average_variance
     variance_calculator = VarianceThreshold(threshold)
     variance_calculator.fit(train_set_x)
-    # print(x_train_selected.shape)
-    # print(x_test_selected.shape)
 
     if top_10_features:
         kept_features_idx = variance_calculator.get_support(indices=True)
@@ -20,8 +20,7 @@ def calculate_variance_threshold(train_set_x, test_set_x, top_10_features):
         top_10_features_train = kept_features_idx[sorted_indices][:10]
         top_10_variance_train = kept_features_variance[sorted_indices][:10]
 
-        X_test_selected = test_set_x[:, kept_features_idx]
-        kept_features_variance_test = np.var(X_test_selected, axis=0)
+        kept_features_variance_test = np.var(test_set_x[:, kept_features_idx], axis=0)
         sorted_indices_test = np.argsort(kept_features_variance_test)[::-1]
         top_10_features_test = kept_features_idx[sorted_indices_test][:10]
         top_10_variance_test = kept_features_variance_test[sorted_indices_test][:10]
