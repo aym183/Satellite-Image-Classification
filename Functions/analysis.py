@@ -34,7 +34,7 @@ def plot_correlation_heatmap(ax, corr_matrix, title):
             ax.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
 
 
-def plot_confusion_matrix(classifier, test_set_x, test_set_y):
+def plot_confusion_matrix(classifier, test_set_x, test_set_y, table_needed):
     confusion_matrix_values = []
     y_pred = classifier.predict(test_set_x)
     ConfusionMatrixDisplay.from_predictions(test_set_y, y_pred)
@@ -44,29 +44,28 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y):
     conf_mtrx = confusion_matrix(test_set_y, y_pred)
     metrics = []
     
-    for idx in range(len(conf_mtrx)):
-        TP = conf_mtrx[idx, idx]
-        FP = np.sum(conf_mtrx[:, idx]) - TP
-        FN = np.sum(conf_mtrx[idx, :]) - TP
-        TN = np.sum(conf_mtrx) - (TP + FP + FN)
-        confusion_matrix_values.append((TP, FP, FN, TN))
+    if table_needed:
+        for idx in range(len(conf_mtrx)):
+            TP = conf_mtrx[idx, idx]
+            FP = np.sum(conf_mtrx[:, idx]) - TP
+            FN = np.sum(conf_mtrx[idx, :]) - TP
+            TN = np.sum(conf_mtrx) - (TP + FP + FN)
+            confusion_matrix_values.append((TP, FP, FN, TN))
 
-    fig, ax = plt.subplots()
-    table = ax.table(cellText=confusion_matrix_values,
-                    colLabels=['True Positive', 'False Positive', 'False Negative', 'True Negative'],
-                    rowLabels=[
-                        'Class 0', 'Class 1', 'Class 2', 'Class 3',
-                        'Class 4', 'Class 5',
-                        'Class 6', 'Class 7', 'Class 8',
-                        'Class 9'
-                    ],
-                    loc='center')
+        fig, ax = plt.subplots()
+        table = ax.table(cellText=confusion_matrix_values,
+                        colLabels=['True Positive', 'False Positive', 'False Negative', 'True Negative'],
+                        rowLabels=[
+                            'Class 0', 'Class 1', 'Class 2', 'Class 3',
+                            'Class 4', 'Class 5',
+                            'Class 6', 'Class 7', 'Class 8',
+                            'Class 9'
+                        ],
+                        loc='center')
 
-    # table.auto_set_font_size(False)
-    # table.set_fontsize(8)
-    table.scale(1.2, 1)
-    ax.axis('off')
-    plt.show()
+        table.scale(1.2, 1)
+        ax.axis('off')
+        plt.show()
     
     # FP = conf_mtrx.sum(axis=0) - TP
     # FN = conf_mtrx.sum(axis=1) - TP
