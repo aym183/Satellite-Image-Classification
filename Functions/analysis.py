@@ -66,16 +66,6 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y, table_needed):
         table.scale(1.2, 1)
         ax.axis('off')
         plt.show()
-    
-    # FP = conf_mtrx.sum(axis=0) - TP
-    # FN = conf_mtrx.sum(axis=1) - TP
-    # TP = np.diag(conf_mtrx)
-    # TN = conf_mtrx.sum() - (FP + FN + TP)
-
-    # print(f"True Positive -> {TP}")
-    # print(f"True Negative -> {TN}")
-    # print(f"False Positive -> {FP}")
-    # print(f"False Negative -> {FN}")
 
 def plot_precision_recall_curve(y_true, y_pred, ax):
     for idx in range(len(np.unique(y_true))):
