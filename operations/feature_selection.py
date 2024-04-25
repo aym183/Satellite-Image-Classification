@@ -51,3 +51,18 @@ def poisson_method(train_set_x, train_set_y):
     top_10_features_train = train_set_x[:, top_10_features_idx]
 
     return top_10_features_idx
+
+def find_non_unique_features():
+    # Checking for unique values of feature, there were 0 features in the train set with more than 1 unique value
+    # In the test set, there was one feature with 2 unique values, but I chose to keep this as if this feature has strong correlation with the target variablee, it could still be useful
+    num_features = x_test.shape[1]
+    unique_value_counts = [len(np.unique(x_test[:, i])) for i in range(num_features)]
+    filtered_features = [(i+1, count) for i, count in enumerate(unique_value_counts) if count == 1]
+
+    if len(filtered_features) == 0:
+        print("No features with 1 unique value")
+    else:
+        for feature, count in filtered_features:
+            print("Features with less than 100 unique values:")
+            print(f"Feature {feature}: {count} unique values")
+    
