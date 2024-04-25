@@ -1,7 +1,7 @@
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 import numpy as np
-from functions.validation import *
+from operations.validation import *
 from sklearn.metrics import accuracy_score, classification_report
 
 # Configuration change all from hyperparameter
