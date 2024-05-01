@@ -156,3 +156,19 @@ def plot_predicted_vs_actual(y_test, y_pred):
     plt.ylabel('Predicted Values')
     plt.title('Actual vs Predicted Values')
     plt.show()
+
+def plot_predicted_vs_actual_subfigures(plot_titles, y_test, y_preds):
+    plt.figure(figsize=(18, 6))
+    
+    for i in range(3):
+        plt.subplot(1, 3, i+1)
+        plt.plot(y_test[:100], 'o', label='Actual')
+        plt.plot(y_preds[i][:100], 'x', label='Prediction')
+        plt.xlabel('Index')
+        plt.ylabel('Value')
+        plt.title(f'{plot_titles[i]}')
+        if i == 0:
+            plt.legend(loc='upper right')
+
+    plt.tight_layout()
+    plt.show()

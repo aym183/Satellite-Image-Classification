@@ -20,8 +20,8 @@ def holdout_validation(classifier, x_train, x_test, y_train, y_test):
 
 # USE ONLY TRAINING SET FOR ALL [Test separate]
 # CLASSIFICATION REPORT 
-def cross_validation(classifier, x_array, y_array, size):
-    cv_score = cross_val_score(classifier, x_array, y_array, cv=size)
+def cross_validation(classifier, x_array, y_array):
+    cv_score = cross_val_score(classifier, x_array, y_array)
     cv_mean_accuracy = np.mean(cv_score)
     print("------ Cross Validation ------")
     print(f"Mean Accuracy: {cv_mean_accuracy}")

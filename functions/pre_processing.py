@@ -37,6 +37,8 @@ def find_categorical_features(train_set):
         if not (is_int(train_set[0][i])) and not (is_float(train_set[0][i])):
             print(f"Column {i+1} -> {train_set[0][i]}")
             categorical_features.append(i)
+
+    # If more than one column exists, encode it?
     return categorical_features
 
 def plot_feature_split_of_values(input_arrays, input_text):
