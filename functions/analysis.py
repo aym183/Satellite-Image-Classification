@@ -22,14 +22,14 @@ def plot_feature_split_of_values(input_arrays: list[np.ndarray], labels: list[st
     fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
     fig.suptitle('Split of Values', fontsize=16)
     
-    for i, input_array in enumerate(input_arrays):
+    for idx, input_array in enumerate(input_arrays):
         flattened_array = input_array.flatten()
-        axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{labels[i]}')
-        axs[i].set_xlabel('Values')
-        axs[i].set_ylabel('Frequency')
-        axs[i].set_xlim(0, 3)
-        axs[i].set_xticks(np.arange(0, 3.1, 0.25))
+        axs[idx].hist(flattened_array, bins=50, color='blue', alpha=0.7)
+        axs[idx].set_title(f'{labels[idx]}')
+        axs[idx].set_xlabel('Values')
+        axs[idx].set_ylabel('Frequency')
+        axs[idx].set_xlim(0, 3)
+        axs[idx].set_xticks(np.arange(0, 3.1, 0.25))
     
     plt.tight_layout()
     plt.show()
@@ -47,12 +47,12 @@ def plot_class_split_of_values(input_arrays: list[np.ndarray], labels: list[str]
     fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
     fig.suptitle('Split of Values', fontsize=16)
     
-    for i, input_array in enumerate(input_arrays):
+    for idx, input_array in enumerate(input_arrays):
         flattened_array = input_array.flatten()
-        axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{labels[i]}')
-        axs[i].set_xlabel('Values')
-        axs[i].set_ylabel('Frequency')
+        axs[idx].hist(flattened_array, bins=50, color='blue', alpha=0.7)
+        axs[idx].set_title(f'{labels[idx]}')
+        axs[idx].set_xlabel('Values')
+        axs[idx].set_ylabel('Frequency')
     
     plt.tight_layout()
     plt.show()
@@ -76,9 +76,9 @@ def plot_single_correlation_heatmap(corr_matrix: np.corrcoef, title: str):
     plt.xlabel('Features')
     plt.ylabel('Features')
     plt.title(title)
-    for i in range(corr_matrix.shape[0]):
-            for j in range(corr_matrix.shape[1]):
-                plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
+    for idx in range(corr_matrix.shape[0]):
+            for idj in range(corr_matrix.shape[1]):
+                plt.text(idj, idx, '{:.2f}'.format(corr_matrix[idx, idj]), ha='center', va='center', color='black')
     plt.show()
 
 def plot_correlation_heatmap(ax, corr_matrix, title):
@@ -90,9 +90,9 @@ def plot_correlation_heatmap(ax, corr_matrix, title):
     ax.set_xticklabels(np.arange(1, corr_matrix.shape[0] + 1), rotation=45)
     ax.set_yticklabels(np.arange(1, corr_matrix.shape[0] + 1))
     ax.set_title(title)
-    for i in range(corr_matrix.shape[0]):
-        for j in range(corr_matrix.shape[1]):
-            ax.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
+    for idx in range(corr_matrix.shape[0]):
+        for idj in range(corr_matrix.shape[1]):
+            ax.text(idj, idx, '{:.2f}'.format(corr_matrix[idx, idj]), ha='center', va='center', color='black')
 
 
 def plot_confusion_matrix(classifier: Union[SVC, MLPClassifier], test_set_x: np.ndarray, test_set_y: np.ndarray, table_needed: bool):
