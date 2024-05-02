@@ -1,5 +1,5 @@
 '''
-Contains all the functions required in the feature selection phase
+This file contains all the functions required in the feature selection phase
 '''
 
 from sklearn.feature_selection import r_regression, f_regression, VarianceThreshold

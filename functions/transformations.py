@@ -1,5 +1,5 @@
 '''
-Contains all the functions required in transforming the datasets after pre-processing
+This file contains all the functions required in transforming the datasets after pre-processing
 '''
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler

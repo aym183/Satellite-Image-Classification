@@ -1,5 +1,5 @@
 '''
-Contains all the functions required for model operations post training
+This file contains all the functions required for model operations post training
 '''
 import joblib
 import numpy as np

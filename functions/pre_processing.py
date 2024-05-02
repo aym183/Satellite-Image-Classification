@@ -1,5 +1,5 @@
 '''
-Contains all the functions required in pre-processing the datasets 
+This file contains all the functions required in pre-processing the datasets 
 '''
 
 import numpy as np

@@ -1,19 +1,31 @@
 '''
-For visualisations
+This file contains all the functions required to plot the visualisations
 '''
 import matplotlib.pyplot as plt 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
 from sklearn.cluster import KMeans
+from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
 import numpy as np
+from typing import Union
 
-def plot_feature_split_of_values(input_arrays, input_text):
+def plot_feature_split_of_values(input_arrays: list[np.ndarray], labels: list[str]):
+    ''' 
+    Plots a histogram showing the split of values in each feature dataset 
+
+    Parameters:
+    input_arrays: list[np.ndarray]
+        The datasets containing the the plottable inputs
+    labels: list[str]
+        The titles for the datasets
+    '''
     fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
     fig.suptitle('Split of Values', fontsize=16)
     
     for i, input_array in enumerate(input_arrays):
         flattened_array = input_array.flatten()
         axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{input_text[i]}')
+        axs[i].set_title(f'{labels[i]}')
         axs[i].set_xlabel('Values')
         axs[i].set_ylabel('Frequency')
         axs[i].set_xlim(0, 3)
@@ -22,21 +34,39 @@ def plot_feature_split_of_values(input_arrays, input_text):
     plt.tight_layout()
     plt.show()
 
-def plot_class_split_of_values(input_arrays, input_text):
+def plot_class_split_of_values(input_arrays: list[np.ndarray], labels: list[str]):
+    ''' 
+    Plots a histogram showing the split of values of each class
+
+    Parameters:
+    input_arrays: list[np.ndarray]
+        The datasets containing the the plottable inputs
+    labels: list[str]
+        The titles for the datasets
+    '''
     fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
     fig.suptitle('Split of Values', fontsize=16)
     
     for i, input_array in enumerate(input_arrays):
         flattened_array = input_array.flatten()
         axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{input_text[i]}')
+        axs[i].set_title(f'{labels[i]}')
         axs[i].set_xlabel('Values')
         axs[i].set_ylabel('Frequency')
     
     plt.tight_layout()
     plt.show()
     
-def plot_single_correlation_heatmap(corr_matrix, title):
+def plot_single_correlation_heatmap(corr_matrix: np.corrcoef, title: str):
+    ''' 
+    Plots a heatmap showing the corrlation between all features and target variables 
+
+    Parameters:
+    corr_matrix: np.corrcoef
+        The correlation matrix between the features and the target variable
+    title: str
+        The title for the figure
+    '''
     plt.figure(figsize=(8, 6))
     plt.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
     plt.colorbar(label='Correlation')
@@ -51,6 +81,7 @@ def plot_single_correlation_heatmap(corr_matrix, title):
                 plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
     plt.show()
 
+# Group into one subfigure function
 def plot_correlation_heatmap(ax, corr_matrix, title):
     im = ax.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
     cbar = ax.figure.colorbar(im, ax=ax)
@@ -65,7 +96,20 @@ def plot_correlation_heatmap(ax, corr_matrix, title):
             ax.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
 
 
-def plot_confusion_matrix(classifier, test_set_x, test_set_y, table_needed):
+def plot_confusion_matrix(classifier: Union[SVC, MLPClassifier], test_set_x: np.ndarray, test_set_y: np.ndarray, table_needed: bool):
+    ''' 
+    Plots a confusion matrix to show the key metrics (i.e. the True Positive, True Negative, False Positive, and False Negative) for each class
+
+    Parameters:
+    classifier: Union[SVC, MLPClassifier]
+        The classifier that was trained during development - Only accepts SVC and MLP for now
+    test_set_x: np.ndarray
+        The features testing dataset
+    test_set_y: np.ndarray
+        The classes testing dataset
+    table_needed: bool
+        This determines whether a table should be created as well for each of the metrics mentioned above
+    '''
     confusion_matrix_values = []
     y_pred = classifier.predict(test_set_x)
     ConfusionMatrixDisplay.from_predictions(test_set_y, y_pred)
@@ -73,7 +117,6 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y, table_needed):
     plt.show()
 
     conf_mtrx = confusion_matrix(test_set_y, y_pred)
-    metrics = []
     
     if table_needed:
         for idx in range(len(conf_mtrx)):
@@ -98,22 +141,44 @@ def plot_confusion_matrix(classifier, test_set_x, test_set_y, table_needed):
         ax.axis('off')
         plt.show()
 
-def plot_precision_recall_curve(y_true, y_pred, ax):
-    for idx in range(len(np.unique(y_true))):
-        precision, recall, _ = precision_recall_curve((y_true == idx).astype(int), y_pred[:, idx])
+def plot_precision_recall_curve(test_set_y: np.ndarray, pred_set_y: np.ndarray, ax: plt.axes):
+    ''' 
+    Plots a precision recall curve to see the rate of (i) true positive predictions to the total positive predictions 
+    and (ii) true positive predictions to the true positives.
+
+    Parameters:
+    test_set_y: np.ndarray
+        The classes testing dataset
+    pred_set_y: np.ndarray
+        The predictions made on the testing data
+    ax: plt.axes
+        Axis when plotting subfigures
+    '''
+    for idx in range(len(np.unique(test_set_y))):
+        precision, recall, _ = precision_recall_curve((test_set_y == idx).astype(int), pred_set_y[:, idx])
         ax.plot(recall, precision, lw=2, label='Class {}'.format(idx))
 
     ax.set_xlabel('Recall')
     ax.set_ylabel('Precision')
     ax.set_title('Precision-Recall Curve')
     ax.legend(loc='best')
-    # plt.show()
 
-def plot_roc_curve(y_true, y_pred, ax):
-    for idx in range(len(np.unique(y_true))):
-        fpr, tpr, _ = roc_curve((y_true == idx).astype(int), y_pred[:, idx])
+def plot_roc_curve(test_set_y, pred_set_y, ax):
+    ''' 
+    Plots an ROC curve to see the rate of true positives to false positives
+
+    Parameters:
+    test_set_y: np.ndarray
+        The classes testing dataset
+    pred_set_y: np.ndarray
+        The predictions made on the testing data
+    ax: plt.axes
+        Axis when plotting subfigures
+    '''
+    for idx in range(len(np.unique(test_set_y))):
+        fpr, tpr, _ = roc_curve((test_set_y == idx).astype(int), pred_set_y[:, idx])
         roc_auc = auc(fpr, tpr)
-        ax.plot(fpr, tpr, lw=2, label='Class {}'.format(idx, roc_auc)) # (AUC = {:.2f}
+        ax.plot(fpr, tpr, lw=2, label='Class {}'.format(idx, roc_auc))
 
     ax.plot([0, 1], [0, 1], color='gray', lw=1, linestyle='--')
     ax.set_xlim([0.0, 1.0])
@@ -122,49 +187,67 @@ def plot_roc_curve(y_true, y_pred, ax):
     ax.set_ylabel('True Positive Rate')
     ax.set_title('ROC Curve')
     ax.legend(loc='lower right')
-    # plt.show()
 
-def plot_det_curve(y_true, y_pred, ax):
-    for idx in range(len(np.unique(y_true))):
-        fpr, fnr, _ = det_curve((y_true == idx).astype(int), y_pred[:, idx])
+def plot_det_curve(test_set_y, pred_set_y, ax):
+    ''' 
+    Plots a DET curve to see the rate of false negatives to false positives
+
+    Parameters:
+    test_set_y: np.ndarray
+        The classes testing dataset
+    pred_set_y: np.ndarray
+        The predictions made on the testing data
+    ax: plt.axes
+        Axis when plotting subfigures
+    '''
+    for idx in range(len(np.unique(test_set_y))):
+        fpr, fnr, _ = det_curve((test_set_y == idx).astype(int), pred_set_y[:, idx])
         ax.plot(fpr, fnr, lw=2, label='Class {}'.format(idx))
 
     ax.set_xlabel('False Positive Rate')
     ax.set_ylabel('False Negative Rate')
     ax.set_title('DET Curve')
     ax.legend(loc='best')
-    # plt.show()
 
-def plot_subfigures(plots, plot_titles, y_pred, y_true, fig_size=(15,10)):
-    columns = 2
-    plots_length = len(plots)
-    num_rows = (plots_length + columns - 1) // plots_length
-    figure, axes = plt.subplots(num_rows, columns, figsize=fig_size) 
+def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray):
+    ''' 
+    Plots a scatter plot showing the predicted vs actual values. 
+    It is done only with 100 occurences so that the outputs are visible.
 
-    for idx, plot_func in enumerate(plots):
-        plt.sca = axes[idx]
-        plot_func(y_true, y_pred)
-        plt.title(plot_titles[idx])
-
-    plt.tight_layout()
-    plt.show()
-
-def plot_predicted_vs_actual(y_test, y_pred):
+    Parameters:
+    test_set_y: np.ndarray
+        The classes testing dataset
+    pred_set_y: np.ndarray
+        The predictions made on the testing data
+    '''
     plt.figure(figsize=(6, 4))
-    plt.plot(y_test[:100], 'o', label='Actual')
-    plt.plot(y_pred[:100], 'x', label='Prediction')
+    plt.plot(test_set_y[:100], 'o', label='Actual')
+    plt.plot(pred_set_y[:100], 'x', label='Prediction')
     plt.xlabel('Actual Values')
     plt.ylabel('Predicted Values')
     plt.title('Actual vs Predicted Values')
     plt.show()
 
-def plot_predicted_vs_actual_subfigures(plot_titles, y_test, y_preds):
+
+# See if can do differently with subfigures
+def plot_predicted_vs_actual_subfigures(test_set_y: np.ndarray, preds_set_y: np.ndarray, plot_titles: list[str]):
+    ''' 
+    Plots a histogram showing the split of values in each feature dataset 
+
+    Parameters:
+    input_arrays: list[np.ndarray]
+        The datasets containing the the plottable inputs
+    labels: list[str]
+        The labels for the datasets
+    labels: list[str]
+        The labels for the datasets
+    '''
     plt.figure(figsize=(18, 6))
     
     for i in range(3):
         plt.subplot(1, 3, i+1)
-        plt.plot(y_test[:100], 'o', label='Actual')
-        plt.plot(y_preds[i][:100], 'x', label='Prediction')
+        plt.plot(test_set_y[:100], 'o', label='Actual')
+        plt.plot(preds_set_y[i][:100], 'x', label='Prediction')
         plt.xlabel('Index')
         plt.ylabel('Value')
         plt.title(f'{plot_titles[i]}')
@@ -176,17 +259,18 @@ def plot_predicted_vs_actual_subfigures(plot_titles, y_test, y_preds):
 
 # ------ TASK 4 ------
 
-def plot_clustering_results(train_set_x, test_set_x, clusters):
-    kmeans = KMeans(n_clusters=clusters)
-    kmeans.fit(train_set_x)
-    cluster_labels = kmeans.predict(test_set_x)
+# def plot_clustering_results(train_set_x, test_set_x, clusters):
 
-    plt.figure(figsize=(8, 6))
-    plt.scatter(train_set_x[:, 0], test_set_x[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.5)
-    plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='x', s=200, c='red', label='Cluster Centers')
-    plt.title('PCA Reduced Testing Dataset with K-means Clustering')
-    plt.xlabel('Principal Component 1')
-    plt.ylabel('Principal Component 2')
-    plt.colorbar(label='Cluster')
-    plt.legend()
-    plt.show()
+#     kmeans = KMeans(n_clusters=clusters)
+#     kmeans.fit(train_set_x)
+#     cluster_labels = kmeans.predict(test_set_x)
+
+#     plt.figure(figsize=(8, 6))
+#     plt.scatter(train_set_x[:, 0], test_set_x[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.5)
+#     plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='x', s=200, c='red', label='Cluster Centers')
+#     plt.title('PCA Reduced Testing Dataset with K-means Clustering')
+#     plt.xlabel('Principal Component 1')
+#     plt.ylabel('Principal Component 2')
+#     plt.colorbar(label='Cluster')
+#     plt.legend()
+#     plt.show()

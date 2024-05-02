@@ -1,5 +1,5 @@
 '''
-Contains all the functions required for miscellaneous use-cases
+This file contains all the functions required for miscellaneous use-cases
 '''
 
 def is_float(string):

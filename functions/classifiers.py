@@ -1,5 +1,5 @@
 '''
-Contains all the functions required in training each model
+This file contains all the functions required in training each model
 '''
 
 from sklearn.svm import SVC
@@ -27,15 +27,15 @@ def svc_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
         The trained model
     '''
     # kernel='rbf', C=1, gamma="scale", probability=True
-    svc = SVC() # Configuration derived from hyperparameter tuning
+    svc = SVC(probability=True) # Configuration derived from hyperparameter tuning
     selected_features = train_set_x
     selected_test_features = test_set_x
     # concatenated_array_x = np.concatenate((selected_features, selected_test_features), axis=0)
     # concatenated_array_y = np.concatenate((train_set_y, test_set_y), axis=0)
     holdout_validation(svc, selected_features, selected_test_features, train_set_y, test_set_y)
     cross_validation(svc, train_set_x, train_set_y)
-    k_fold_valdiation(train_set_x, train_set_y, 20, "svc")
-    k_fold_cross_validation_strat(train_set_x, train_set_y, 10, "svc")
+    k_fold_valdiation("svc", train_set_x, train_set_y, 20)
+    k_fold_cross_validation_strat("svc", train_set_x, train_set_y, 10)
 
     return svc
 

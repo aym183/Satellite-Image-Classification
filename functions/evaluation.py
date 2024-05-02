@@ -1,5 +1,5 @@
 '''
-For Metrics
+This file contains all the functions used for evaluating the models
 '''
 from sklearn.metrics import accuracy_score, classification_report, log_loss
 from sklearn.neural_network import MLPClassifier
