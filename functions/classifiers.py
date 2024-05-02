@@ -64,7 +64,7 @@ def mlp_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
     # concatenated_array_y = np.concatenate((train_set_y, test_set_y), axis=0)
     holdout_validation(mlp, train_set_x, test_set_x, train_set_y, test_set_y)
     cross_validation(mlp, train_set_x, train_set_y)
-    k_fold_valdiation(train_set_x, train_set_y, 20, "mlp")
-    k_fold_cross_validation_strat(train_set_x, train_set_y, 10, "mlp")
+    k_fold_valdiation("mlp", train_set_x, train_set_y, 20)
+    k_fold_cross_validation_strat("mlp", train_set_x, train_set_y, 10)
 
     return mlp
