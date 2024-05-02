@@ -81,7 +81,6 @@ def plot_single_correlation_heatmap(corr_matrix: np.corrcoef, title: str):
                 plt.text(j, i, '{:.2f}'.format(corr_matrix[i, j]), ha='center', va='center', color='black')
     plt.show()
 
-# Group into one subfigure function
 def plot_correlation_heatmap(ax, corr_matrix, title):
     im = ax.imshow(corr_matrix, cmap='coolwarm', interpolation='nearest')
     cbar = ax.figure.colorbar(im, ax=ax)
@@ -209,7 +208,7 @@ def plot_det_curve(test_set_y, pred_set_y, ax):
     ax.set_title('DET Curve')
     ax.legend(loc='best')
 
-def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray):
+def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray, title: str, ax: plt.axes):
     ''' 
     Plots a scatter plot showing the predicted vs actual values. 
     It is done only with 100 occurences so that the outputs are visible.
@@ -219,43 +218,17 @@ def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray):
         The classes testing dataset
     pred_set_y: np.ndarray
         The predictions made on the testing data
+    title: str
+        Title of the plot
+    ax: plt.axes
+        Axis when plotting subfigures
     '''
-    plt.figure(figsize=(6, 4))
-    plt.plot(test_set_y[:100], 'o', label='Actual')
-    plt.plot(pred_set_y[:100], 'x', label='Prediction')
-    plt.xlabel('Actual Values')
-    plt.ylabel('Predicted Values')
-    plt.title('Actual vs Predicted Values')
-    plt.show()
-
-
-# See if can do differently with subfigures
-def plot_predicted_vs_actual_subfigures(test_set_y: np.ndarray, preds_set_y: np.ndarray, plot_titles: list[str]):
-    ''' 
-    Plots a histogram showing the split of values in each feature dataset 
-
-    Parameters:
-    input_arrays: list[np.ndarray]
-        The datasets containing the the plottable inputs
-    labels: list[str]
-        The labels for the datasets
-    labels: list[str]
-        The labels for the datasets
-    '''
-    plt.figure(figsize=(18, 6))
-    
-    for i in range(3):
-        plt.subplot(1, 3, i+1)
-        plt.plot(test_set_y[:100], 'o', label='Actual')
-        plt.plot(preds_set_y[i][:100], 'x', label='Prediction')
-        plt.xlabel('Index')
-        plt.ylabel('Value')
-        plt.title(f'{plot_titles[i]}')
-        if i == 0:
-            plt.legend(loc='upper right')
-
-    plt.tight_layout()
-    plt.show()
+    ax.plot(test_set_y[:100], 'o', label='Actual')
+    ax.plot(pred_set_y[:100], 'x', label='Prediction')
+    ax.set_xlabel('Actual Values')
+    ax.set_ylabel('Predicted Values')
+    ax.set_title(title)
+    ax.legend()
 
 # ------ TASK 4 ------
 
