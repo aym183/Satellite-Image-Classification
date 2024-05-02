@@ -19,7 +19,7 @@ def svc_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
         The classes testing dataset
 
     Returns:
-    SVC
+    svc: SVC
         The trained model
     '''
     # kernel='rbf', C=1, gamma="scale", probability=True
@@ -50,7 +50,7 @@ def mlp_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
         The classes testing dataset
 
     Returns:
-    MLPClassifier
+    mlp: MLPClassifier
         The trained model
     '''
     # hidden_layer_sizes=(50, 100, 50), activation='tanh', solver='sgd', alpha=0.0001, random_state=42, shuffle=False
