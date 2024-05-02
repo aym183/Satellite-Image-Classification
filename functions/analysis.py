@@ -208,7 +208,7 @@ def plot_det_curve(test_set_y, pred_set_y, ax):
     ax.set_title('DET Curve')
     ax.legend(loc='best')
 
-def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray, title: str, ax: plt.axes):
+def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray, title: str, ax: plt.axes, no_of_plots: int):
     ''' 
     Plots a scatter plot showing the predicted vs actual values. 
     It is done only with 100 occurences so that the outputs are visible.
@@ -222,9 +222,11 @@ def plot_predicted_vs_actual(test_set_y: np.ndarray, pred_set_y: np.ndarray, tit
         Title of the plot
     ax: plt.axes
         Axis when plotting subfigures
+    no_of_plots: int
+        The number of plots that the predictions vs actuals are shown
     '''
-    ax.plot(test_set_y[:100], 'o', label='Actual')
-    ax.plot(pred_set_y[:100], 'x', label='Prediction')
+    ax.plot(test_set_y[:no_of_plots], 'o', label='Actual')
+    ax.plot(pred_set_y[:no_of_plots], 'x', label='Prediction')
     ax.set_xlabel('Actual Values')
     ax.set_ylabel('Predicted Values')
     ax.set_title(title)
