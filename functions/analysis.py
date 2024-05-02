@@ -3,6 +3,7 @@ For visualisations
 '''
 import matplotlib.pyplot as plt 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, precision_recall_curve, auc, roc_curve, det_curve
+from sklearn.cluster import KMeans
 import numpy as np
 
 def plot_feature_split_of_values(input_arrays, input_text):
@@ -171,4 +172,21 @@ def plot_predicted_vs_actual_subfigures(plot_titles, y_test, y_preds):
             plt.legend(loc='upper right')
 
     plt.tight_layout()
+    plt.show()
+
+# ------ TASK 4 ------
+
+def plot_clustering_results(train_set_x, test_set_x, clusters):
+    kmeans = KMeans(n_clusters=clusters)
+    kmeans.fit(train_set_x)
+    cluster_labels = kmeans.predict(test_set_x)
+
+    plt.figure(figsize=(8, 6))
+    plt.scatter(train_set_x[:, 0], test_set_x[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.5)
+    plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='x', s=200, c='red', label='Cluster Centers')
+    plt.title('PCA Reduced Testing Dataset with K-means Clustering')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.colorbar(label='Cluster')
+    plt.legend()
     plt.show()

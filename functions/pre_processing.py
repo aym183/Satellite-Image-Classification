@@ -1,9 +1,20 @@
+'''
+Contains all the functions required in pre-processing the datasets 
+'''
+
 import numpy as np
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt 
 from functions.misc import *
 
-def fetch_datasets():
+def fetch_datasets() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    ''' 
+    Fetches all the datasets from the datasets folder
+
+    Returns:
+    tuple
+        All the loaded datasets
+    '''
     x_train = np.load("./datasets/x_train.npy")
     x_test = np.load("./datasets/x_test.npy")
     y_train = np.load("./datasets/y_train.npy")
@@ -11,12 +22,37 @@ def fetch_datasets():
 
     return x_train, x_test, y_train, y_test
 
-def find_missing_values(input: np.ndarray, array_name: str) -> str:
-    missing_values_count = np.isnan(input).sum()
-    return f"Missing Values in {array_name} -> {missing_values_count}"
+def find_missing_values(input_array: np.ndarray) -> dict:
+    ''' 
+    Finds the missing values (if any) in all the datasets
 
-def find_non_unique_features(x_set, array_name):
-    # Checking for unique values of features (Should find those that have 1), there were 0 features in the train set with more than 1 unique value
+    Keyword Arguments:
+    input_array: np.ndarray
+        The dataset values
+    array_name: str
+        The name of the array
+
+    Returns:
+    str
+        A string indicating the missing values found in the dataset
+    '''
+   
+    return np.isnan(input_array).sum()
+
+def find_non_unique_features(x_set: np.ndarray, array_name: str) -> list:
+    ''' 
+    Finds the features with non-unique values (i.e. only one value throughout)
+
+    Keyword Arguments:
+    x_set: np.ndarray
+        The dataset that contains features
+    array_name: str
+        The name of the array
+
+    Returns:
+    list
+        A list containing the features with non unique values
+    '''
     # In the test set, there was one feature with 2 unique values, but I chose to keep this as if this feature has strong correlation with the target variablee, it could still be useful
     num_features = x_set.shape[1]
     unique_value_counts = [len(np.unique(x_set[:, i])) for i in range(num_features)]
@@ -28,45 +64,36 @@ def find_non_unique_features(x_set, array_name):
         for feature, count in filtered_features:
             print("Features with less than 100 unique values:")
             print(f"Feature {feature}: {count} unique values")
+    
+    return filtered_features
 
 # Assuming numerical features are not categorical
-def find_categorical_features(train_set):
-    num_columns = train_set.shape[1]
+def find_categorical_features(x_set: np.ndarray, array_name: str) -> list:
+    ''' 
+    Finds the categorical features in a dataset
+
+    Keyword Arguments:
+    x_set: np.ndarray
+        The dataset that contains features
+    array_name: str
+        The name of the array
+
+    Returns:
+    list
+        A list containing the features that have categorical values
+        
+    '''
+    num_columns = x_set.shape[1]
     categorical_features = []
+
     for i in range(num_columns):
-        if not (is_int(train_set[0][i])) and not (is_float(train_set[0][i])):
-            print(f"Column {i+1} -> {train_set[0][i]}")
+        if not (is_int(x_set[0][i])) and not (is_float(x_set[0][i])):
             categorical_features.append(i)
+
+    if len(categorical_features) == 0:
+        print(f"No categorical features in {array_name}")
+    else:
+        print(f"There are {len(categorical_features)} categorical features")
 
     # If more than one column exists, encode it?
     return categorical_features
-
-def plot_feature_split_of_values(input_arrays, input_text):
-    fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
-    fig.suptitle('Split of Values', fontsize=16)
-
-    for i, input_array in enumerate(input_arrays):
-        flattened_array = input_array.flatten()
-        axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{input_text[i]}')
-        axs[i].set_xlabel('Values')
-        axs[i].set_ylabel('Frequency')
-        axs[i].set_xlim(0, 3)
-        axs[i].set_xticks(np.arange(0, 3.1, 0.25))
-
-    plt.tight_layout()
-    plt.show()
-
-def plot_class_split_of_values(input_arrays, input_text):
-    fig, axs = plt.subplots(1, len(input_arrays), figsize=(15, 4)) 
-    fig.suptitle('Split of Values', fontsize=16)
-
-    for i, input_array in enumerate(input_arrays):
-        flattened_array = input_array.flatten()
-        axs[i].hist(flattened_array, bins=50, color='blue', alpha=0.7)
-        axs[i].set_title(f'{input_text[i]}')
-        axs[i].set_xlabel('Values')
-        axs[i].set_ylabel('Frequency')
-
-    plt.tight_layout()
-    plt.show()
