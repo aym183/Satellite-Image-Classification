@@ -26,7 +26,7 @@ def find_missing_values(input_array: np.ndarray) -> dict:
     ''' 
     Finds the missing values (if any) in all the datasets
 
-    Keyword Arguments:
+    Parameters:
     input_array: np.ndarray
         The dataset values
     array_name: str
@@ -43,7 +43,7 @@ def find_non_unique_features(x_set: np.ndarray, array_name: str) -> list:
     ''' 
     Finds the features with non-unique values (i.e. only one value throughout)
 
-    Keyword Arguments:
+    Parameters:
     x_set: np.ndarray
         The dataset that contains features
     array_name: str
@@ -72,7 +72,7 @@ def find_categorical_features(x_set: np.ndarray, array_name: str) -> list:
     ''' 
     Finds the categorical features in a dataset
 
-    Keyword Arguments:
+    Parameters:
     x_set: np.ndarray
         The dataset that contains features
     array_name: str

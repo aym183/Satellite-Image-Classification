@@ -1,3 +1,7 @@
+'''
+Contains all the functions required in the feature selection phase
+'''
+
 from sklearn.feature_selection import r_regression, f_regression, VarianceThreshold
 from sklearn.linear_model import PoissonRegressor
 import numpy as np
@@ -6,7 +10,7 @@ def calculate_variance_threshold(train_set_x: np.ndarray, test_set_x: np.ndarray
     '''
     Finds and removes the low variance features from datasets
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     test_set_x: np.ndarray
@@ -54,7 +58,7 @@ def pearson_correlation(train_set_x: np.ndarray, train_set_y: np.ndarray) -> np.
     '''
     Calculates the pearson correlation for all the features
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     train_set_y: np.ndarray
@@ -72,7 +76,7 @@ def f_regression_scores(train_set_x: np.ndarray, train_set_y: np.ndarray) -> np.
     '''
     Calculates the f regression for all the features
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     train_set_y: np.ndarray
@@ -90,7 +94,7 @@ def poisson_method(train_set_x: np.ndarray, train_set_y: np.ndarray) -> np.ndarr
     '''
     Performs feature selection using Poisson method
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     train_set_y: np.ndarray

@@ -12,7 +12,7 @@ def fetch_classification_report(classifier: Union[SVC, MLPClassifier], test_set_
     '''
     Creates the classification report for a classifier to evaluate the precision, recall, f1-score, and support
 
-    Keyword Arguments:
+    Parameters:
     classifier: Union[SVC, MLPClassifier]
         The classifier that was trained during development - Only accepts SVC and MLP for now
     test_set_x: np.ndarray
@@ -28,7 +28,7 @@ def fetch_multiple_classification_report(classifiers: Union[SVC, MLPClassifier],
     '''
     Creates multiple classification reports used for comparison
 
-    Keyword Arguments:
+    Parameters:
     classifiers: Union[SVC, MLPClassifier]
         The classifier that was trained during development - Only accepts SVC and MLP for now
     classifier_titles: list[str]
@@ -46,7 +46,7 @@ def fetch_accuracy_score(test_set_y: np.ndarray, predicted_set_y: np.ndarray):
     '''
     Details the accuracy of a model based on the actual and predicted values
 
-    Keyword Arguments:
+    Parameters:
     test_set_y: np.ndarray
         The classes testing dataset
     predicted_set_y: np.ndarray
@@ -59,7 +59,7 @@ def fetch_log_loss(test_set_y: np.ndarray, predicted_set_y: np.ndarray):
     '''
     Details the log loss of a model based on the actual and predicted values
 
-    Keyword Arguments:
+    Parameters:
     test_set_y: np.ndarray
         The classes testing dataset
     predicted_set_y: np.ndarray

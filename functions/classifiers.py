@@ -1,3 +1,7 @@
+'''
+Contains all the functions required in training each model
+'''
+
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 import numpy as np
@@ -8,7 +12,7 @@ def svc_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
     ''' 
     Trains the model under a Support Vector Classifier
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     train_set_y: np.ndarray
@@ -39,7 +43,7 @@ def mlp_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y:
     ''' 
     Trains the model under a Multi Layer Perceptron Classifier
 
-    Keyword Arguments:
+    Parameters:
     train_set_x: np.ndarray
         The features training dataset
     train_set_y: np.ndarray

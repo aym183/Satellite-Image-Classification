@@ -1,17 +1,58 @@
+'''
+Contains all the functions required for model operations post training
+'''
 import joblib
 import numpy as np
 from sklearn.model_selection import cross_val_score, KFold
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
+from typing import Union
 
-def save_model(model, file_name):
+def save_model(model: Union[SVC, MLPClassifier], file_name: str):
+    '''
+    Saves the model using joblib
+
+    Parameters:
+    model: Union[SVC, MLPClassifier]
+        The model that was trained during development - Only accepts SVC and MLP for now
+    file_name: str
+        The classes training dataset
+    '''
     joblib.dump(model, file_name)
     print(f"{file_name} has the new model!")
 
-def load_model(file_name):
+def load_model(file_name: str):
+    '''
+    Loads the model using joblib
+
+    Parameters:
+    file_name: str
+        The path where the model was saved
+    
+    Returns:
+        The loaded model
+    '''
     return joblib.load(file_name)
 
-def find_best_configuration_svc(parameters, train_set_x, test_set_x, train_set_y, test_set_y):
+def find_best_configuration_svc(parameters: dict, train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y: np.ndarray, test_set_y: np.ndarray) -> dict:
+    '''
+    Performs manual hyperparameter optimisation to find the best configuration for the SVC classifier
+
+    Parameters:
+    parameters: dict
+        All the parameters to be experimented with
+    train_set_x: str
+        The features training dataset
+    test_set_x: str
+        The features testing dataset
+    train_set_y: str
+        The classes training dataset
+    test_set_y: str
+        The classes testing dataset
+    
+    Returns:
+        The best parameter configuration with the accuracy
+    '''
     selected_c = 0 
     selected_kernel = ''
     selected_gamma = '' 
@@ -40,7 +81,25 @@ def find_best_configuration_svc(parameters, train_set_x, test_set_x, train_set_y
         "testing_accuracy": best_test
     }
 
-def find_best_configuration_mlp(parameters, train_set_x, test_set_x, train_set_y, test_set_y):
+def find_best_configuration_mlp(parameters: dict, train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y: np.ndarray, test_set_y: np.ndarray) -> dict:
+    '''
+    Performs manual hyperparameter optimisation to find the best configuration for the MLP classifier
+
+    Parameters:
+    parameters: dict
+        All the parameters to be experimented with
+    train_set_x: str
+        The features training dataset
+    test_set_x: str
+        The features testing dataset
+    train_set_y: str
+        The classes training dataset
+    test_set_y: str
+        The classes testing dataset
+    
+    Returns:
+        The best parameter configuration with the accuracy
+    '''
     selected_hidden_layers = 0 
     selected_activation = ''
     selected_solver = '' 

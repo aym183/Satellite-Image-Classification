@@ -10,7 +10,7 @@ def normalise_min_max(train_set: np.ndarray, test_set: np.ndarray) -> tuple:
     ''' 
     Normalises the datasets to the range (-1, 1) with MinMaxScaler
 
-    Keyword Arguments:
+    Parameters:
     train_set: np.ndarray
         The training dataset
     test_set: np.ndarray
@@ -29,7 +29,7 @@ def normalise_min_max_task_3(train_set: np.ndarray, test_set: np.ndarray) -> tup
     ''' 
     Normalises the datasets to the range (10, 15) with MinMaxScaler
 
-    Keyword Arguments:
+    Parameters:
     train_set: np.ndarray
         The training dataset
     test_set: np.ndarray
@@ -48,7 +48,7 @@ def standardize_std_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tuple
     ''' 
     Standardizes the datasets using StandardScaler
 
-    Keyword Arguments:
+    Parameters:
     train_set: np.ndarray
         The training dataset
     test_set: np.ndarray
@@ -67,7 +67,7 @@ def normalise_robust_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tupl
     ''' 
     Scales features with the median and interquartile range using RobustScaler
 
-    Keyword Arguments:
+    Parameters:
     train_set: np.ndarray
         The training dataset
     test_set: np.ndarray
@@ -86,7 +86,7 @@ def find_lowest_occurring_class(dataset_y: np.ndarray) -> float:
     ''' 
     Finds the class with the lowest occurrences of values
 
-    Keyword Arguments:
+    Parameters:
     dataset_y: np.ndarray
         The classes dataset
 
@@ -103,7 +103,7 @@ def find_highest_occurring_class(dataset_y: np.ndarray) -> float:
     ''' 
     Finds the class with the highest occurrences of values
 
-    Keyword Arguments:
+    Parameters:
     dataset_y: np.ndarray
         The classes dataset
 
@@ -120,7 +120,7 @@ def dataset_undersampling(dataset_x: np.ndarray, dataset_y: np.ndarray) -> tuple
     ''' 
     Used in imbalanced datasets to reduce the instances in the majority class to balance the class distribution
 
-    Keyword Arguments:
+    Parameters:
     dataset_x: np.ndarray
         The features dataset
     dataset_y: np.ndarray
@@ -150,7 +150,7 @@ def dataset_oversampling(dataset_x: np.ndarray, dataset_y: np.ndarray) -> tuple:
     ''' 
     Used in imbalanced datasets to increase the instances in the minority class to balance the class distribution
 
-    Keyword Arguments:
+    Parameters:
     dataset_x: np.ndarray
         The features dataset
     dataset_y: np.ndarray
