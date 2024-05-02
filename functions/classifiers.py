@@ -4,9 +4,24 @@ import numpy as np
 from functions.validation import *
 from sklearn.metrics import accuracy_score, classification_report
 
-# Configuration change all from hyperparameter
+def svc_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y: np.ndarray, test_set_y: np.ndarray) -> SVC:
+    ''' 
+    Trains the model under a Support Vector Classifier
 
-def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y):
+    Keyword Arguments:
+    train_set_x: np.ndarray
+        The features training dataset
+    train_set_y: np.ndarray
+        The classes training dataset
+    test_set_x: np.ndarray
+        The features testing dataset
+    test_set_y: np.ndarray
+        The classes testing dataset
+
+    Returns:
+    SVC
+        The trained model
+    '''
     # kernel='rbf', C=1, gamma="scale", probability=True
     svc = SVC() # Configuration derived from hyperparameter tuning
     selected_features = train_set_x
@@ -20,7 +35,24 @@ def svc_classifier(train_set_x, test_set_x, train_set_y, test_set_y):
 
     return svc
 
-def mlp_classifier(train_set_x, test_set_x, train_set_y, test_set_y):
+def mlp_classifier(train_set_x: np.ndarray, test_set_x: np.ndarray, train_set_y: np.ndarray, test_set_y: np.ndarray) -> MLPClassifier:
+    ''' 
+    Trains the model under a Multi Layer Perceptron Classifier
+
+    Keyword Arguments:
+    train_set_x: np.ndarray
+        The features training dataset
+    train_set_y: np.ndarray
+        The classes training dataset
+    test_set_x: np.ndarray
+        The features testing dataset
+    test_set_y: np.ndarray
+        The classes testing dataset
+
+    Returns:
+    MLPClassifier
+        The trained model
+    '''
     # hidden_layer_sizes=(50, 100, 50), activation='tanh', solver='sgd', alpha=0.0001, random_state=42, shuffle=False
     mlp = MLPClassifier() # Configuration derived from hyperparameter tuning
     mlp.fit(train_set_x, train_set_y)
