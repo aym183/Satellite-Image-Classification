@@ -4,6 +4,7 @@ This file contains all the functions required in transforming the datasets after
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 from sklearn.decomposition import PCA
+from functions.validation import *
 import numpy as np
 
 def normalise_min_max(train_set: np.ndarray, test_set: np.ndarray) -> tuple:
@@ -41,7 +42,7 @@ def normalise_min_max_task_3(train_set: np.ndarray, test_set: np.ndarray) -> tup
     '''
     min_max_scaler = MinMaxScaler(feature_range=(10,15))
     x_train_norm = min_max_scaler.fit_transform(train_set)
-    x_test_norm = min_max_scaler.fit_transform(test_set)
+    x_test_norm = min_max_scaler.transform(test_set)
     return x_train_norm, x_test_norm
 
 def standardize_std_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tuple:
@@ -60,7 +61,7 @@ def standardize_std_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tuple
     '''
     standard_scaler = StandardScaler()
     x_train_norm = standard_scaler.fit_transform(train_set)
-    x_test_norm = standard_scaler.fit_transform(test_set)
+    x_test_norm = standard_scaler.transform(test_set)
     return x_train_norm, x_test_norm
 
 def normalise_robust_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tuple:
@@ -79,7 +80,7 @@ def normalise_robust_scaler(train_set: np.ndarray, test_set: np.ndarray) -> tupl
     '''
     robust_scaler = RobustScaler()
     x_train_norm = robust_scaler.fit_transform(train_set)
-    x_test_norm = robust_scaler.fit_transform(test_set)
+    x_test_norm = robust_scaler.transform(test_set)
     return x_train_norm, x_test_norm
 
 def find_lowest_occurring_class(dataset_y: np.ndarray) -> float:
@@ -179,22 +180,22 @@ def dataset_oversampling(dataset_x: np.ndarray, dataset_y: np.ndarray) -> tuple:
 # ------ Task 4 ------
 
 # By reducing to 2, you're getting the 2 most important features
-# def reduce_pca_dimensionality(train_set_x, test_set_x, test_set_y):
-#     ''' 
-#     Finds the features with non-unique values (i.e. only one value throughout)
+def reduce_pca_dimensionality(train_set_x: np.ndarray, test_set_x: np.ndarray, components: int) -> tuple:
+    # ''' 
+    # Finds the features with non-unique values (i.e. only one value throughout)
 
-#     Keyword Arguments:
-#     x_set: np.ndarray
-#         The dataset that contains features
-#     array_name: str
-#         The name of the array
+    # Keyword Arguments:
+    # x_set: np.ndarray
+    #     The dataset that contains features
+    # array_name: str
+    #     The name of the array
 
-#     Returns:
-#     list
-#         A list containing the features with non unique values
-#     '''
-#     pca = PCA(n_components=2)
-#     x_train_pca = pca.fit_transform(train_set_x)
-#     x_test_pca = pca.transform(test_set_x)
+    # Returns:
+    # list
+    #     A list containing the features with non unique values
+    # '''
+    pca = PCA(n_components=components)
+    x_train_pca = pca.fit_transform(train_set_x)
+    x_test_pca = pca.transform(test_set_x)
 
-#     return x_train_pca, x_test_pca
+    return x_train_pca, x_test_pca

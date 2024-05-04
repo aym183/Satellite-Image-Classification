@@ -3,12 +3,6 @@ import numpy as np
 import joblib
 from typing import List, Dict
 
-def save_dataset(model, file_name):
-    joblib.dump(model, file_name)
-    print(f"{file_name} has the new dataset!")
-    
-def load_dataset(file_name):
-    return joblib.load(file_name)
 
 # This class is going to be used to take the dataset from a path
 # Abstracts everything so that a user can input a dataset -> all outliers are found and removed, model performed
