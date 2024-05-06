@@ -1,0 +1,10 @@
+{
+    "hidden_layer": [
+        50,
+        100,
+        50
+    ],
+    "activation": "relu",
+    "solver": "sgd",
+    "alpha": 0.0001
+}
