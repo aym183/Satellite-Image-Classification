@@ -1,0 +1,5 @@
+{
+    "c": 10,
+    "kernel": "rbf",
+    "gamma": "scale"
+}
