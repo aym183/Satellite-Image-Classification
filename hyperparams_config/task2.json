@@ -1,0 +1,10 @@
+{
+    "hidden_layer": [
+        50,
+        50,
+        50
+    ],
+    "activation": "tanh",
+    "solver": "adam",
+    "alpha": 0.0001
+}
